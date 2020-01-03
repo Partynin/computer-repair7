@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="copyNavbar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Computer Repair</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="/clientData">Client data</a>
+                </li>
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="/serviceOperation">Service operation</a>
+                </li>
+                <li>
+                    <a class="nav-link mr-3" href="/modifyDevice">Modify device of clients</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Service Operation</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/styles.css}" type="text/css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="~{parts/navbar :: copyNavbar}"></div>
+<div class="container mt-5 mb-5">
+    <h4>Enter service:</h4>
+    <div>
+        <form th:action="@{/serviceOperation}" method="post">
+            <div class="form-group">
+                <input type="number" name="clientId" class="form-control" placeholder="Enter client ID"/>
+            </div>
+            <div class="form-group">
+                <input type="number" name="deviceId" class="form-control" placeholder="Enter device ID"/>
+            </div>
+            <div class="form-group">
+                <input type="text" name="serviceName" class="form-control" placeholder="Enter service name"/>
+            </div>
+            <div class="form-group">
+                <input type="number" name="price" class="form-control" placeholder="Enter price"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <br/>
+    <h4>Add discount to service:</h4>
+    <div>
+        <form th:action="@{/addDiscountToService}" method="post">
+            <div class="form-group">
+                <input type="text" name="serviceId" class="form-control" placeholder="Enter service ID"/>
+            </div>
+            <div class="form-group">
+                <input type="text" name="discountId" class="form-control" placeholder="Enter discount ID"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <br/>
+    <h4>Add guarantee to service:</h4>
+    <div>
+        <form th:action="@{/addGuaranteeToService}" method="post">
+            <div class="form-group">
+                <input type="number" name="serviceId" class="form-control" placeholder="Enter service ID"/>
+            </div>
+            <div class="form-group">
+                <input type="number" name="guaranteeId" class="form-control" placeholder="Enter guarantee ID"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <br/>
+    <h2>All services</h2>
+    <div>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th>Service ID</th>
+                <th>Client ID</th>
+                <th>Device ID</th>
+                <th>Service Name</th>
+                <th>Start Date</th>
+                <th>Price</th>
+                <th>Discount ID</th>
+                <th>Guarantee ID</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${services.empty}">
+                <td colspan="2">No service available!</td>
+            </tr>
+            <tr th:each="service : ${services}">
+                <td><span th:text="${service.id}">Service ID</span></td>
+                <td><span th:text="${service.client.id}">Client ID</span></td>
+                <td><span th:text="${service?.device?.id}">Device ID</span></td>
+                <td><span th:text="${service.serviceName}">Name</span></td>
+                <td><span th:text="${service.startDate}">Start date</span></td>
+                <td><span th:text="${service.price}">Price</span></td>
+                <td><span th:text="${service?.discount?.id}">Discount ID</span></td>
+                <td><span th:text="${service?.guarantee?.id}">Guarantee ID</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/>
+    <h3>Delete service:</h3>
+    <div>
+        <form th:action="@{/deleteService}" method="post">
+            <div class="form-group">
+                <input type="number" name="serviceId" class="col-sm-6 form-control" placeholder="Enter service ID"/>
+            </div>
+            <div>
+                <button type="submit" class="col-sm-2 btn btn-primary">Delete</button>
+            </div>
+        </form>
+    </div>
+    <br/>
+    <h4>Create discount:</h4>
+    <div>
+        <form th:action="@{/createDiscountOperation}" method="post">
+            <div class="form-group">
+                <input type="text" name="discountType" class="form-control" placeholder="Enter discount type"/>
+            </div>
+            <div class="form-group">
+                <input type="number" name="amount" class="form-control" placeholder="Enter discount amount"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <br/>
+    <h3>All discount</h3>
+    <div>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th>Discount ID</th>
+                <th>Discount Type</th>
+                <th>Amount</th>
+                <th>Start Date</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${discounts.empty}">
+                <td colspan="2">No discount available!</td>
+            </tr>
+            <tr th:each="discount : ${discounts}">
+                <td><span th:text="${discount.id}">Discount ID</span></td>
+                <td><span th:text="${discount.discountType}">Discount Type</span></td>
+                <td><span th:text="${discount.amount}">SAmount</span></td>
+                <td><span th:text="${discount.startDate}">Start Date</span></td>
+                <td><span th:text="${discount.status}">Status</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/>
+    <h4>Create guarantee:</h4>
+    <div>
+        <form th:action="@{/addServiceGuarantee}" method="post">
+            <div class="form-group">
+                <input type="text" name="guaranteeType" class="form-control"
+                       placeholder="Enter guarantee type"/>
+            </div>
+            <div class="form-group">
+                <input type="number" name="duration" class="form-control"
+                       placeholder="Enter duration in months"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <br/>
+    <h4>All type guarantees</h4>
+    <div>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th>Guarantee ID</th>
+                <th>Guarantee Type</th>
+                <th>Start Date</th>
+                <th>Duration</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${guarantees.empty}">
+                <td colspan="2">No guarantee available!</td>
+            </tr>
+            <tr th:each="guarantee : ${guarantees}">
+                <td><span th:text="${guarantee.id}">Guarantee ID</span></td>
+                <td><span th:text="${guarantee.guaranteeType}">Guarantee Type</span></td>
+                <td><span th:text="${guarantee.startDate}">Start Date</span></td>
+                <td><span th:text="${guarantee.duration}">Duration</span></td>
+                <td><span th:text="${guarantee.status}">Status</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:insert="~{parts/footer :: copy}"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Client Data</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/styles.css}" type="text/css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="~{parts/navbar :: copyNavbar}"></div>
+<div class="container mt-5">
+    <h3>Enter client data:</h3>
+    <div>
+        <form th:action="@{/clientData}" method="post">
+            <div class="form-group">
+                <input type="text" name="name" class="form-control" placeholder="Enter client name"/>
+            </div>
+            <div class="form-group">
+                <input type="text" name="lastname" class="form-control" placeholder="Enter client lastname"/>
+            </div>
+            <div class="form-group">
+                <input type="number" name="phone" class="form-control" placeholder="Enter client phone number"/>
+            </div>
+            <div class="form-group">
+                <input type="text" name="neighborhood" class="form-control" placeholder="Enter client neighborhood"/>
+            </div>
+            <div class="form-group">
+                <input type="text" name="street" class="form-control" placeholder="Enter client street"/>
+            </div>
+            <div class="form-group">
+                <input type="number" name="house" class="form-control" placeholder="Enter client house"/>
+            </div>
+            <div class="form-group">
+                <input type="number" name="apartment" class="form-control" placeholder="Enter client apartment"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <br>
+    <h3>Existing clients</h3>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Client ID</th>
+            <th>Name</th>
+            <th>Lastname</th>
+            <th>Phone</th>
+            <th>Neighborhood</th>
+            <th>Street</th>
+            <th>House</th>
+            <th>Apartment</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${clients.empty}">
+            <td colspan="2">No client available!</td>
+        </tr>
+        <tr th:each="client : ${clients}">
+            <td><span th:text="${client.id}">Client ID</span></td>
+            <td><span th:text="${client.name}">Name</span></td>
+            <td><span th:text="${client.lastname}">Lastname</span></td>
+            <td><span th:text="${client.phone}">Phone</span></td>
+            <td><span th:text="${client.address.neighborhood}">Neighborhood</span></td>
+            <td><span th:text="${client.address.street}">Street</span></td>
+            <td><span th:text="${client.address.house}">House</span></td>
+            <td><span th:text="${client.address.apartment}">Apartment</span></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:insert="~{parts/footer :: copy}"></div>
+</div>
+</body>
+</html>
