@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Client Data</title>
+    <title>Edit Client</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
@@ -12,9 +12,12 @@
 <body>
 <div th:insert="~{parts/navbar :: copyNavbar}"></div>
 <div class="container mt-5">
-    <h3> Ввод данных клиента: </h3>
+    <h3> Редактирование данных клиента: </h3>
     <div>
-        <form th:action="@{/clientData}" method="post">
+        <form th:action="@{/editClient}" method="post">
+            <div class="form-group">
+                <input type="number" name="id" class="form-control" placeholder="ID клиента"/>
+            </div>
             <div class="form-group">
                 <input type="text" name="lastname" class="form-control" placeholder="Фамилия"/>
             </div>
@@ -46,7 +49,7 @@
             <div class="form-group">
                 <input type="number" name="index" class="form-control" placeholder="Почтовый индекс"/>
             </div>
-            <button type="submit" class="btn btn-primary"> Ввод данных </button>
+            <button type="submit" class="btn btn-primary"> Обнавить данные клиента </button>
         </form>
     </div>
     <br>
@@ -55,16 +58,17 @@
         <thead class="thead-dark">
         <tr>
             <th> ID клиента</th>
-            <th> Фамилия </th>
-            <th> Имя </th>
-            <th> Отчество </th>
-            <th> Телефон </th>
-            <th> Город </th>
-            <th> Район </th>
-            <th> Улица </th>
-            <th> Дом </th>
-            <th> Квартира </th>
-            <th> Почтовый индекс </th>
+            <th> Фамилия</th>
+            <th> Имя</th>
+            <th> Отчество</th>
+            <th> Телефон</th>
+            <th> Город</th>
+            <th> Район</th>
+            <th> Улица</th>
+            <th> Дом</th>
+            <th> Квартира</th>
+            <th> Почтовый индекс</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -83,6 +87,14 @@
             <td><span th:text="${client.address.house}">House</span></td>
             <td><span th:text="${client.address.apartment}">Apartment</span></td>
             <td><span th:text="${client.address.index}">Index</span></td>
+            <td>
+                <span>
+                    <form th:action="@{/deleteClient}" method="post">
+                        <input type="hidden" th:value="${client.id}" name="clientId"/>
+                        <button class="btn btn-primary" type="submit"> Удалить </button>
+                    </form>
+                </span>
+            </td>
         </tr>
         </tbody>
     </table>

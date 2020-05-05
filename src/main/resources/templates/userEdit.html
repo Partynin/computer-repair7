@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>User Edit</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="~{parts/navbar :: copyNavbar}"></div>
+<div class="container mt-5">
+    <h2> Редактироване даннх пользователя </h2>
+    <div>
+        <form th:action="@{/user}" th:object="${user}" method="post">
+            <input type="text" name="username" th:value="${user.username}"/>
+            <ul>
+                <li th:each="role : ${roles}">
+                    <input type="checkbox" th:name="${role}" th:value="${role.name()}"/>
+                    <label th:text="${role.name()}"> Название роли </label>
+                </li>
+            </ul>
+            <input type="hidden" th:value="${user.id}" name="userId"/>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+    <div th:insert="~{parts/footer :: copy}"></div>
+</div>
+</body>
+</html>

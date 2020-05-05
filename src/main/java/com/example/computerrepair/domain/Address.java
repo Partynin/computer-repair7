@@ -10,10 +10,18 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "address_id")
     private Long addressId;
-    private String neighborhood;
-    private String street;
-    private String house;
-    private String apartment;
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
+    @ManyToOne
+    @JoinColumn(name = "hood_id")
+    private Neighborhood neighborhood;
+    @ManyToOne
+    @JoinColumn(name = "street_id")
+    private Street street;
+    private Integer house;
+    private Integer apartment;
+    private Integer index;
 
     @OneToMany(mappedBy = "address")
     private Set<Client> clients;
@@ -21,11 +29,13 @@ public class Address {
     public Address() {
     }
 
-    public Address(String neighborhood, String street, String house, String apartment) {
+    public Address(City city, Neighborhood neighborhood, Street street, Integer house, Integer apartment, Integer index) {
+        this.city = city;
         this.neighborhood = neighborhood;
         this.street = street;
         this.house = house;
         this.apartment = apartment;
+        this.index = index;
     }
 
     public Long getAddressId() {
@@ -36,36 +46,52 @@ public class Address {
         this.addressId = addressId;
     }
 
-    public String getNeighborhood() {
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public Neighborhood getNeighborhood() {
         return neighborhood;
     }
 
-    public void setNeighborhood(String neighborhood) {
+    public void setNeighborhood(Neighborhood neighborhood) {
         this.neighborhood = neighborhood;
     }
 
-    public String getStreet() {
+    public Street getStreet() {
         return street;
     }
 
-    public void setStreet(String street) {
+    public void setStreet(Street street) {
         this.street = street;
     }
 
-    public String getHouse() {
+    public Integer getHouse() {
         return house;
     }
 
-    public void setHouse(String house) {
+    public void setHouse(Integer house) {
         this.house = house;
     }
 
-    public String getApartment() {
+    public Integer getApartment() {
         return apartment;
     }
 
-    public void setApartment(String apartment) {
+    public void setApartment(Integer apartment) {
         this.apartment = apartment;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 
     public Set<Client> getClients() {

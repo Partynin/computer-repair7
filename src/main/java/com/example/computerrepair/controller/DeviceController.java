@@ -30,6 +30,37 @@ public class DeviceController {
         return "modifyDevice";
     }
 
+    @PostMapping("/editDevice")
+    public String editDevice(
+            Long clientId,
+            Long deviceId,
+            String deviceName,
+            String modelDevice,
+            String serialNumber,
+            Model model
+    ) {
+        Optional<Device> existDevice = deviceRepository.findById(deviceId);
+        Optional<Client> existClient = clientRepository.findById(clientId);
+
+        if (existDevice.isPresent()) {
+            Device device = existDevice.get();
+
+            if (existClient.isPresent()) {
+                Client client = existClient.get();
+                device.setClient(client);
+                device.setDeviceName(deviceName);
+                device.setModelDevice(modelDevice);
+                device.setSerialNumber(serialNumber);
+                deviceRepository.save(device);
+            }
+        }
+
+        Iterable<Device> devices = deviceRepository.findAll();
+        model.addAttribute("devices", devices);
+
+        return "modifyDevice";
+    }
+
     @PostMapping("/addDevice")
     public String addDevice(String clientId, String deviceName, String modelDevice, String serialNumber, Model model) {
         Optional<Client> clientOptional = clientRepository.findById(Long.valueOf(clientId));

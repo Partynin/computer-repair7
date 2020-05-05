@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Service Operation</title>
+    <title>Edit Service Operation</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
@@ -12,9 +12,12 @@
 <body>
 <div th:insert="~{parts/navbar :: copyNavbar}"></div>
 <div class="container mt-5 mb-5">
-    <h4> Записать новую услугу: </h4>
+    <h4> Редактировать услугу: </h4>
     <div>
-        <form th:action="@{/serviceOperation}" method="post">
+        <form th:action="@{/updateServiceOperation}" method="post">
+            <div class="form-group">
+                <input type="number" name="serviceId" class="form-control" placeholder="ID услуги"/>
+            </div>
             <div class="form-group">
                 <input type="number" name="clientId" class="form-control" placeholder="ID клиента"/>
             </div>
@@ -27,34 +30,9 @@
             <div class="form-group">
                 <input type="number" name="price" class="form-control" placeholder="Стоимость"/>
             </div>
-            <button type="submit" class="btn btn-primary"> Записать услугу </button>
+            <button type="submit" class="btn btn-primary"> Обнавить данные услуги </button>
         </form>
-    </div>
-    <br/>
-    <h4> Добавить скидку для услуги: </h4>
-    <div>
-        <form th:action="@{/addDiscountToService}" method="post">
-            <div class="form-group">
-                <input type="text" name="serviceId" class="form-control" placeholder="ID услуги"/>
-            </div>
-            <div class="form-group">
-                <input type="text" name="discountId" class="form-control" placeholder="ID скидки"/>
-            </div>
-            <button type="submit" class="btn btn-primary"> Добавить скидку </button>
-        </form>
-    </div>
-    <br/>
-    <h4> Добавить гарантию для услуги: </h4>
-    <div>
-        <form th:action="@{/addGuaranteeToService}" method="post">
-            <div class="form-group">
-                <input type="number" name="serviceId" class="form-control" placeholder="ID услуги"/>
-            </div>
-            <div class="form-group">
-                <input type="number" name="guaranteeId" class="form-control" placeholder="ID гарантии"/>
-            </div>
-            <button type="submit" class="btn btn-primary"> Добавить гарантию </button>
-        </form>
+        <div th:if="${updateError != null}" th:text="${updateError}"></div>
     </div>
     <br/>
     <h2> Список услуг </h2>
@@ -102,16 +80,22 @@
         </form>
     </div>
     <br/>
-    <h4> Создать новую скидку: </h4>
+    <h4> Редактировать существующую скидку: </h4>
     <div>
-        <form th:action="@{/createDiscountOperation}" method="post">
+        <form th:action="@{/updateDiscount}" method="post">
+            <div class="form-group">
+                <input type="number" name="discountId" class="form-control" placeholder=" ID скидки "/>
+            </div>
             <div class="form-group">
                 <input type="text" name="discountType" class="form-control" placeholder=" Тип скидки "/>
             </div>
             <div class="form-group">
                 <input type="number" name="amount" class="form-control" placeholder=" Размер скидки "/>
             </div>
-            <button type="submit" class="btn btn-primary"> Создать скидку </button>
+            <div class="form-group">
+                <input type="text" name="status" class="form-control" placeholder=" Статус скидки "/>
+            </div>
+            <button type="submit" class="btn btn-primary"> Обнавить данные скидки </button>
         </form>
     </div>
     <br/>

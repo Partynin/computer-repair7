@@ -36,13 +36,20 @@ public class ServiceController {
         return "serviceOperation";
     }
 
+    @GetMapping("/updateServiceOperation")
+    public String getUpdateService(Model model) {
+        addAttributes(model);
+
+        return "editServiceOperation";
+    }
+
     @PostMapping("/serviceOperation")
-    public String setService(int clientId, int deviceId, String serviceName, String price, Model model) {
+    public String setService(Long clientId, Long deviceId, String serviceName, String price, Model model) {
         // Make your code more readable and protect it against null pointer exceptions.
         // https://www.oracle.com/technetwork/articles/java/java8-optional-2175753.html
         // the Optional class forces you to think about the case when the value is not present
-        Optional<Client> clientOptional = clientRepository.findById(Long.valueOf(clientId));
-        Optional<Device> deviceOptional = deviceRepository.findById(Long.valueOf(deviceId));
+        Optional<Client> clientOptional = clientRepository.findById(clientId);
+        Optional<Device> deviceOptional = deviceRepository.findById(deviceId);
         if (clientOptional.isPresent() && deviceOptional.isPresent()) {
             Client client = clientOptional.get();
             Device device = deviceOptional.get();
@@ -53,6 +60,38 @@ public class ServiceController {
         addAttributes(model);
 
         return "serviceOperation";
+    }
+
+    @PostMapping("/updateServiceOperation")
+    public String setUpdateService(Long serviceId, Long clientId, Long deviceId, String serviceName, Integer price, Model model) {
+        addAttributes(model);
+
+        if (serviceId != null && clientId != null && deviceId != null) {
+            Optional<Service> serviceOptional = serviceRepository.findById(serviceId);
+            if (serviceOptional.isPresent()) {
+                Optional<Client> clientOptional = clientRepository.findById(clientId);
+                Optional<Device> deviceOptional = deviceRepository.findById(deviceId);
+
+                if (clientOptional.isPresent() && deviceOptional.isPresent()) {
+                    Client client = clientOptional.get();
+                    Device device = deviceOptional.get();
+                    Service service = serviceOptional.get();
+                    service.setClient(client);
+                    service.setDevice(device);
+                    service.setServiceName(serviceName);
+                    service.setPrice(price);
+                    serviceRepository.save(service);
+                } else {
+                    model.addAttribute("updateError", "Клиента или устройства с указанным ID не существует!");
+                }
+            } else {
+                model.addAttribute("updateError", "Услуги с указанным ID не существует!");
+            }
+        } else {
+            model.addAttribute("updateError", "Поля ID услуги, ID клиента, ID устройства не должны быть пустыми!");
+        }
+
+        return "editServiceOperation";
     }
 
     @PostMapping("/createDiscountOperation")
@@ -66,6 +105,22 @@ public class ServiceController {
         addAttributes(model);
 
         return "serviceOperation";
+    }
+
+    @PostMapping("/updateDiscount")
+    public String updateDiscount(Long discountId, String discountType, int amount, String status, Model model) {
+        Optional<Discount> discountOptional = discountRepository.findById(discountId);
+        if (!discountOptional.isPresent()) {
+            Discount discount = discountOptional.get();
+            discount.setDiscountType(discountType);
+            discount.setAmount(amount);
+            discount.setStatus(Boolean.parseBoolean(status));
+            discountRepository.save(discount);
+        }
+
+        addAttributes(model);
+
+        return "editServiceOperation";
     }
 
     @PostMapping("/addServiceGuarantee")
@@ -123,5 +178,6 @@ public class ServiceController {
         model.addAttribute("services", services);
         Iterable<Discount> discounts = discountRepository.findAll();
         model.addAttribute("discounts", discounts);
+        model.addAttribute("updateError");
     }
 }

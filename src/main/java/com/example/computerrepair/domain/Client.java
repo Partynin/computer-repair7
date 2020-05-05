@@ -9,10 +9,10 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
     private String lastname;
-    private String phone;
-
+    private String name;
+    private String patronymic;
+    private Long phone;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "address_id")
@@ -27,13 +27,20 @@ public class Client {
     public Client() {
     }
 
-    public Client(String name, String lastname, String phone, Address address) {
-        this.name = name;
+    public Client(String lastname, String name, String patronymic, Long phone, Address address) {
         this.lastname = lastname;
+        this.name = name;
+        this.patronymic = patronymic;
         this.phone = phone;
         this.address = address;
     }
 
+    public void setNewPersonalInformation(String lastname, String name, String patronymic, Long phone) {
+        setLastname(lastname);
+        setName(name);
+        setPatronymic(patronymic);
+        setPhone(phone);
+    }
 
     public Long getId() {
         return id;
@@ -41,14 +48,6 @@ public class Client {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getLastname() {
@@ -59,11 +58,27 @@ public class Client {
         this.lastname = lastname;
     }
 
-    public String getPhone() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public Long getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
     }
 
