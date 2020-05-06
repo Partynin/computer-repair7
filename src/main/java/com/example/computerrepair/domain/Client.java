@@ -1,6 +1,7 @@
 package com.example.computerrepair.domain;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -104,6 +105,36 @@ public class Client {
 
     public void setDevices(Set<Device> devices) {
         this.devices = devices;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return id.equals(client.id) &&
+                lastname.equals(client.lastname) &&
+                name.equals(client.name) &&
+                patronymic.equals(client.patronymic) &&
+                phone.equals(client.phone) &&
+                address.equals(client.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, lastname, name, patronymic, phone, address);
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", lastname='" + lastname + '\'' +
+                ", name='" + name + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", phone=" + phone +
+                ", address=" + address +
+                '}';
     }
 }
 

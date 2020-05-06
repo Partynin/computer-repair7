@@ -90,18 +90,6 @@
         </table>
     </div>
     <br/>
-    <h3> Удаление услуги: </h3>
-    <div>
-        <form th:action="@{/deleteService}" method="post">
-            <div class="form-group">
-                <input type="number" name="serviceId" class="col-sm-6 form-control" placeholder=" Введите ID услуги "/>
-            </div>
-            <div>
-                <button type="submit" class="col-sm-2 btn btn-primary"> Удалить услугу </button>
-            </div>
-        </form>
-    </div>
-    <br/>
     <h4> Создать новую скидку: </h4>
     <div>
         <form th:action="@{/createDiscountOperation}" method="post">

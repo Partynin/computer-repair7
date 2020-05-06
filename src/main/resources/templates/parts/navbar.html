@@ -34,12 +34,15 @@
                     <a class="nav-link mr-3" href="/modifyDevice"> Устройства клиентов </a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="/serviceOperation"> Услуги и скидки </a>
+                    <a class="nav-link" href="/serviceOperation"> Услуги, скидки и гарантии </a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a class="nav-link mr-3" href="/updateServiceOperation"> Редактировать/удалить услуги и скидки </a>
+                    <a class="nav-link mr-3" href="/updateServiceOperation"> Редактировать/удалить услуги, скидки и гарантии </a>
                 </li>
-                <li class="nav-item mr-3">
+                <li class="nav-item mr-3" sec:authorize="hasAuthority('ADMIN')">
+                    <a class="nav-link mr-3" href="/report"> Формирование отчетов </a>
+                </li>
+                <li class="nav-item mr-3" sec:authorize="hasAuthority('ADMIN')">
                     <a class="nav-link mr-3" href="/user"> Список пользователей </a>
                 </li>
             </ul>
@@ -53,6 +56,11 @@
                     <form th:action="@{/logout}" method="post">
                         <button class="btn btn-primary" type="submit"> Выход </button>
                     </form>
+                </li>
+                <li class="nav-item mr-3 ml-3 mt-1">
+                    <div class="row" sec:authorize="isAuthenticated()">
+                        <p sec:authentication="principal.username">username</p>
+                    </div>
                 </li>
             </ul>
         </div>

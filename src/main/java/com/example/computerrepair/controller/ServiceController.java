@@ -56,14 +56,13 @@ public class ServiceController {
             Service service = new Service(client, device, serviceName, Integer.parseInt(price));
             serviceRepository.save(service);
         }
-
         addAttributes(model);
 
         return "serviceOperation";
     }
 
     @PostMapping("/updateServiceOperation")
-    public String setUpdateService(Long serviceId, Long clientId, Long deviceId, String serviceName, Integer price, Model model) {
+    public String updateService(Long serviceId, Long clientId, Long deviceId, String serviceName, Integer price, Model model) {
         addAttributes(model);
 
         if (serviceId != null && clientId != null && deviceId != null) {
@@ -101,7 +100,6 @@ public class ServiceController {
             Discount discount = new Discount(discountType, amount);
             discountRepository.save(discount);
         }
-
         addAttributes(model);
 
         return "serviceOperation";
@@ -117,19 +115,32 @@ public class ServiceController {
             discount.setStatus(Boolean.parseBoolean(status));
             discountRepository.save(discount);
         }
-
         addAttributes(model);
 
         return "editServiceOperation";
     }
 
     @PostMapping("/addServiceGuarantee")
-    public String addServiceGuarantee(Guarantee guarantee, Model model) {
+    public String setGuarantee(Guarantee guarantee, Model model) {
         guaranteeRepository.save(guarantee);
-
         addAttributes(model);
 
         return "serviceOperation";
+    }
+
+    @PostMapping("/updateGuarantee")
+    public String updateGuarantee(Long guaranteeId, String guaranteeType, int duration, String status, Model model) {
+        Optional<Guarantee> guaranteeOptional = guaranteeRepository.findById(guaranteeId);
+        if (guaranteeOptional.isPresent()) {
+            Guarantee guarantee = guaranteeOptional.get();
+            guarantee.setGuaranteeType(guaranteeType);
+            guarantee.setDuration(duration);
+            guarantee.setStatus(Boolean.parseBoolean(status));
+            guaranteeRepository.save(guarantee);
+        }
+        addAttributes(model);
+
+        return "editServiceOperation";
     }
 
     @PostMapping("/addDiscountToService")
@@ -139,7 +150,6 @@ public class ServiceController {
             Discount discount = discountOptional.get();
             serviceRepository.setDiscountByServiceId(Long.valueOf(serviceId), discount);
         }
-
         addAttributes(model);
 
         return "serviceOperation";
@@ -152,23 +162,45 @@ public class ServiceController {
             Guarantee guarantee = guaranteeOptional.get();
             serviceRepository.setGuaranteeByServiceId(serviceId, guarantee);
         }
-
         addAttributes(model);
 
         return "serviceOperation";
     }
 
     @PostMapping("/deleteService")
-    public String deleteService(int serviceId, Model model) {
-        Optional<Service> optionalService = serviceRepository.findById(Long.valueOf(serviceId));
+    public String deleteService(Long serviceId, Model model) {
+        Optional<Service> optionalService = serviceRepository.findById(serviceId);
         if (optionalService.isPresent()) {
             Service service = optionalService.get();
             serviceRepository.delete(service);
         }
-
         addAttributes(model);
 
-        return "serviceOperation";
+        return "editServiceOperation";
+    }
+
+    @PostMapping("/deleteDiscount")
+    public String deleteDiscount(Long discountId, Model model) {
+        Optional<Discount> optionalDiscount = discountRepository.findById(discountId);
+        if (optionalDiscount.isPresent()) {
+            Discount discount = optionalDiscount.get();
+            discountRepository.delete(discount);
+        }
+        addAttributes(model);
+
+        return "editServiceOperation";
+    }
+
+    @PostMapping("/deleteGuarantee")
+    public String deleteGuarantee(Long guaranteeId, Model model) {
+        Optional<Guarantee> optionalGuarantee = guaranteeRepository.findById(guaranteeId);
+        if (optionalGuarantee.isPresent()) {
+            Guarantee guarantee = optionalGuarantee.get();
+            guaranteeRepository.delete(guarantee);
+        }
+        addAttributes(model);
+
+        return "editServiceOperation";
     }
 
     private void addAttributes(Model model) {

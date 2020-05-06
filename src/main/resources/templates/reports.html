@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Devices of client</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="~{parts/navbar :: copyNavbar}"></div>
+<div class="container mt-5">
+    <h4> Отчет о клиентах, обратившихся указанное колличество раз </h4>
+    <form th:action="@{/reportAboutClientsContactingASpecifiedNumberOfTimes}" method="post">
+        <div class="form-group">
+            <input type="number" name="amount" class="col-sm-6 form-control" placeholder=" Введите колличество обращений "/>
+        </div>
+        <div>
+            <button type="submit" class="col-sm-2 btn btn-primary"> Получить отчет </button>
+        </div>
+    </form>
+    <br/>
+    <h3> «Отчет о клиентах, обратившихся указанное количество раз» </h3>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th> ID клиента</th>
+            <th> Фамилия</th>
+            <th> Имя</th>
+            <th> Отчество</th>
+            <th> Телефон</th>
+            <th> Город</th>
+            <th> Район</th>
+            <th> Улица</th>
+            <th> Дом</th>
+            <th> Квартира</th>
+            <th> Почтовый индекс</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${clients.empty}">
+            <td colspan="2"> Выберите колличество обращений. </td>
+        </tr>
+        <tr th:each="client : ${clients}">
+            <td><span th:text="${client.id}">Client ID</span></td>
+            <td><span th:text="${client.lastname}">Name</span></td>
+            <td><span th:text="${client.name}">Name</span></td>
+            <td><span th:text="${client.patronymic}">Lastname</span></td>
+            <td><span th:text="${client.phone}">Phone</span></td>
+            <td><span th:text="${client.address.city.nameCity}">City</span></td>
+            <td><span th:text="${client.address.neighborhood.nameHood}">Neighborhood</span></td>
+            <td><span th:text="${client.address.street.nameStreet}">Street</span></td>
+            <td><span th:text="${client.address.house}">House</span></td>
+            <td><span th:text="${client.address.apartment}">Apartment</span></td>
+            <td><span th:text="${client.address.index}">Index</span></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:insert="~{parts/footer :: copy}"></div>
+</div>
+</body>
+</html>

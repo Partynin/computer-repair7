@@ -20,7 +20,7 @@
     </div>
     <br/>
     <form th:action="@{/login}" method="post">
-        <div class="form-group"> Имя пользователя: </label>
+        <div class="form-group "> Имя пользователя: </label>
             <div class="col-sm-6">
                 <input type="text" name="username" class="form-control" placeholder="User name"/>
             </div>
@@ -32,7 +32,6 @@
             </div>
         </div>
         <button class="btn btn-primary" type="submit">Ввод</button>
-        <a href="/registration" class="badge badge-success">Добавить нового пользователя</a>
     </form>
 
     <div th:insert="~{parts/footer :: copy}"></div>

@@ -68,7 +68,7 @@
         </table>
     </div>
     <br/>
-    <h3> Удаление услуги: </h3>
+    <h4> Удаление услуги: </h4>
     <div>
         <form th:action="@{/deleteService}" method="post">
             <div class="form-group">
@@ -99,7 +99,7 @@
         </form>
     </div>
     <br/>
-    <h3> Список скидок </h3>
+    <h2> Список скидок </h2>
     <div>
         <table class="table">
             <thead class="thead-dark">
@@ -126,18 +126,38 @@
         </table>
     </div>
     <br/>
-    <h4> Создать гарантию:</h4>
+    <h4> Удаление скидки: </h4>
     <div>
-        <form th:action="@{/addServiceGuarantee}" method="post">
+        <form th:action="@{/deleteDiscount}" method="post">
+            <div class="form-group">
+                <input type="number" name="discountId" class="col-sm-6 form-control" placeholder=" Введите ID скидки "/>
+            </div>
+            <div>
+                <button type="submit" class="col-sm-2 btn btn-primary"> Удалить скидку </button>
+            </div>
+        </form>
+    </div>
+    <br/>
+    <h4> Редактировать существующую гарантию:</h4>
+    <div>
+        <form th:action="@{/updateGuarantee}" method="post">
+            <div class="form-group">
+                <input type="number" name="guaranteeId" class="form-control"
+                       placeholder="ID гарантии"/>
+            </div>
             <div class="form-group">
                 <input type="text" name="guaranteeType" class="form-control"
-                       placeholder="Введите тип гарантии"/>
+                       placeholder="Тип гарантии"/>
             </div>
             <div class="form-group">
                 <input type="number" name="duration" class="form-control"
                        placeholder="Длительность гарантии в месяцах"/>
             </div>
-            <button type="submit" class="btn btn-primary"> Создать гарантию </button>
+            <div class="form-group">
+                <input type="text" name="status" class="form-control"
+                       placeholder="Статус гарантии"/>
+            </div>
+            <button type="submit" class="btn btn-primary"> Обнавить данные гарантии </button>
         </form>
     </div>
     <br/>
@@ -166,6 +186,18 @@
             </tr>
             </tbody>
         </table>
+    </div>
+    <br/>
+    <h4> Удаление гарантии: </h4>
+    <div>
+        <form th:action="@{/deleteGuarantee}" method="post">
+            <div class="form-group">
+                <input type="number" name="guaranteeId" class="col-sm-6 form-control" placeholder=" Введите ID гарантии "/>
+            </div>
+            <div>
+                <button type="submit" class="col-sm-2 btn btn-primary"> Удалить гарантию </button>
+            </div>
+        </form>
     </div>
     <div th:insert="~{parts/footer :: copy}"></div>
 </div>
